@@ -1,0 +1,12 @@
+{
+  "name": "storefront-backend-project",
+  "version": "1.0.0",
+  "description": "Full Stack JavaScript Developer Nanodegree - Project 2",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Trung Vo",
+  "license": "ISC"
+}
