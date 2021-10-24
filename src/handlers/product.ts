@@ -1,5 +1,11 @@
 import express, { Request, Response } from "express";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 import { Product, ProductStore } from "../models/product";
+
+dotenv.config();
+
+const { TOKEN_SECRET } = process.env;
 
 const store = new ProductStore();
 
@@ -14,6 +20,16 @@ const show = async (req: Request, res: Response) => {
 };
 
 const create = async (req: Request, res: Response) => {
+  try {
+    const authorizationHeader = req.headers.authorization;
+    const token = authorizationHeader?.split(" ")[1];
+    jwt.verify(token, TOKEN_SECRET);
+  } catch (err) {
+    res.status(401);
+    res.json("Access denied, invalid token");
+    return;
+  }
+
   try {
     const product: Product = {
       id: req.body.id,
@@ -30,15 +46,44 @@ const create = async (req: Request, res: Response) => {
 };
 
 const destroy = async (req: Request, res: Response) => {
-  const deleted = await store.delete(req.body.id);
-  res.json(deleted);
+  try {
+    const authorizationHeader = req.headers.authorization;
+    const token = authorizationHeader?.split(" ")[1];
+    jwt.verify(token, TOKEN_SECRET);
+  } catch (err) {
+    res.status(401);
+    res.json("Access denied, invalid token");
+    return;
+  }
+
+  try {
+    const deleted = await store.delete(req.body.id);
+    res.json(deleted);
+  } catch (error) {
+    res.status(400);
+    res.json({ error });
+  }
+};
+
+const verifyAuthToken = (req: Request, res: Response, next: Function) => {
+  try {
+    const authorizationHeader = req.headers.authorization;
+    const token = authorizationHeader?.split(" ")[1];
+    const decoded = jwt.verify(token, TOKEN_SECRET);
+
+    next();
+  } catch (error) {
+    res.status(401);
+    res.json("Access denied, invalid token");
+    return;
+  }
 };
 
 const productRoutes = (app: express.Application) => {
   app.get("/products", index);
   app.get("/products/:id", show);
-  app.post("/products", create);
-  app.delete("/products", destroy);
+  app.post("/products", verifyAuthToken, create);
+  app.delete("/products", verifyAuthToken, destroy);
 };
 
 export default productRoutes;
