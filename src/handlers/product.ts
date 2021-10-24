@@ -56,8 +56,13 @@ const destroy = async (req: Request, res: Response) => {
     return;
   }
 
-  const deleted = await store.delete(req.body.id);
-  res.json(deleted);
+  try {
+    const deleted = await store.delete(req.body.id);
+    res.json(deleted);
+  } catch (error) {
+    res.status(400);
+    res.json({ error });
+  }
 };
 
 const verifyAuthToken = (req: Request, res: Response, next: Function) => {
