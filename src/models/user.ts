@@ -13,6 +13,33 @@ const pepper = process.env.BCRYPT_PASSWORD;
 const saltRounds = process.env.SALT_ROUNDS;
 
 export class UserStore {
+  async index(): Promise<User[]> {
+    try {
+      const sql = "SELECT * from users";
+      const conn = await Client.connect();
+      const result = await conn.query(sql);
+
+      conn.release();
+
+      return result.rows;
+    } catch (err) {
+      throw new Error(`Unable to get all users. Error: ${err}`);
+    }
+  }
+  async show(id: string): Promise<User> {
+    try {
+      const sql = "SELECT * FROM users WHERE id=($1)";
+      const conn = await Client.connect();
+      const result = await conn.query(sql, [id]);
+      const user = result.rows[0];
+
+      conn.release();
+
+      return user;
+    } catch (err) {
+      throw new Error(`Could not find user ${id}. Error: ${err}`);
+    }
+  }
   async create(u: User): Promise<User> {
     try {
       const conn = await Client.connect();
