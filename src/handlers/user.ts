@@ -21,16 +21,16 @@ const show = async (req: Request, res: Response) => {
 };
 
 const register = async (req: Request, res: Response) => {
-  // @ts-ignore
-  const salt = await bcrypt.genSalt(parseInt(BCRYPT_SALT_ROUNDS));
-  const hashPassword = bcrypt.hashSync(req.body.password + BCRYPT_PEPPER, salt);
+  const salt = await bcrypt.genSalt(parseInt(BCRYPT_SALT_ROUNDS as string));
+  const pepperedPassword = `${req.headers.password}${BCRYPT_PEPPER}`;
+  const hashPassword = bcrypt.hashSync(pepperedPassword, salt);
 
   try {
     const user: User = {
-      firstname: req.body.firstname,
-      lastname: req.body.lastname,
-      username: req.body.username,
-      password: hashPassword,
+      firstname: req.headers.firstname as string,
+      lastname: req.headers.lastname as string,
+      username: req.headers.username as string,
+      password: hashPassword as string,
     };
 
     const newUser = await store.create(user);
