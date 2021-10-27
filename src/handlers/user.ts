@@ -1,11 +1,12 @@
 import express, { Request, Response } from "express";
-import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 import { User, UserStore } from "../models/user";
 
 dotenv.config();
 
-const { TOKEN_SECRET } = process.env;
+const { BCRYPT_SALT_ROUNDS, BCRYPT_PEPPER, BCRYPT_TOKEN_SECRET } = process.env;
 
 const store = new UserStore();
 
@@ -19,24 +20,17 @@ const show = async (req: Request, res: Response) => {
   res.json(user);
 };
 
-const create = async (req: Request, res: Response) => {
-  try {
-    const authorizationHeader = req.headers.authorization;
-    const token = authorizationHeader?.split(" ")[1];
-    jwt.verify(token, TOKEN_SECRET);
-  } catch (err) {
-    res.status(401);
-    res.json("Access denied, invalid token");
-    return;
-  }
+const register = async (req: Request, res: Response) => {
+  const salt = await bcrypt.genSalt(parseInt(BCRYPT_SALT_ROUNDS as string));
+  const pepperedPassword = `${req.headers.password}${BCRYPT_PEPPER}`;
+  const hashPassword = bcrypt.hashSync(pepperedPassword, salt);
 
   try {
     const user: User = {
-      id: req.body.id,
-      firstname: req.body.firstname,
-      lastname: req.body.lastname,
-      username: req.body.username,
-      password: req.body.password,
+      firstname: req.headers.firstname as string,
+      lastname: req.headers.lastname as string,
+      username: req.headers.username as string,
+      password: hashPassword as string,
     };
 
     const newUser = await store.create(user);
@@ -51,7 +45,7 @@ const verifyAuthToken = (req: Request, res: Response, next: Function) => {
   try {
     const authorizationHeader = req.headers.authorization;
     const token = authorizationHeader?.split(" ")[1];
-    const decoded = jwt.verify(token, TOKEN_SECRET);
+    const decoded = jwt.verify(token, BCRYPT_TOKEN_SECRET);
 
     next();
   } catch (error) {
@@ -64,7 +58,7 @@ const verifyAuthToken = (req: Request, res: Response, next: Function) => {
 const userRoutes = (app: express.Application) => {
   app.get("/users", index);
   app.get("/users/:id", show);
-  app.post("/users", verifyAuthToken, create);
+  app.post("/users/register", register);
 };
 
 export default userRoutes;
