@@ -32,7 +32,6 @@ const create = async (req: Request, res: Response) => {
 
   try {
     const user: User = {
-      id: req.body.id,
       firstname: req.body.firstname,
       lastname: req.body.lastname,
       username: req.body.username,
