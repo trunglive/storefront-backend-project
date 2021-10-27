@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { User, UserStore } from "../models/user";
+import verifyAuthToken from "./verifyAuthToken";
 
 dotenv.config();
 
@@ -68,23 +69,9 @@ const login = async (req: Request, res: Response) => {
   }
 };
 
-const verifyAuthToken = (req: Request, res: Response, next: Function) => {
-  try {
-    const authorizationHeader = req.headers.authorization;
-    const token = authorizationHeader?.split(" ")[1];
-    const decoded = jwt.verify(token, BCRYPT_TOKEN_SECRET);
-
-    next();
-  } catch (error) {
-    res.status(401);
-    res.json("Access denied, invalid token");
-    return;
-  }
-};
-
 const userRoutes = (app: express.Application) => {
-  app.get("/users", index);
-  app.get("/users/:id", show);
+  app.get("/users", verifyAuthToken, index);
+  app.get("/users/:id", verifyAuthToken, show);
   app.post("/users/register", register);
   app.post("/users/login", login);
 };
