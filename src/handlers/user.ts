@@ -41,6 +41,33 @@ const register = async (req: Request, res: Response) => {
   }
 };
 
+const login = async (req: Request, res: Response) => {
+  try {
+    const foundUser = await store.login(req.headers.username as string);
+    if (!foundUser) {
+      return res.status(400).send("Username is wrong");
+    }
+
+    const pepperedPassword = `${req.headers.password}${BCRYPT_PEPPER}`;
+    const validPassword = bcrypt.compareSync(
+      pepperedPassword,
+      foundUser.password
+    );
+    if (!validPassword) {
+      return res.status(400).send("Password is wrong");
+    }
+
+    const token = jwt.sign(
+      { username: foundUser.username },
+      BCRYPT_TOKEN_SECRET as string
+    );
+    res.header("auth-token", token).send({ token });
+  } catch (err) {
+    res.status(400);
+    res.json(err);
+  }
+};
+
 const verifyAuthToken = (req: Request, res: Response, next: Function) => {
   try {
     const authorizationHeader = req.headers.authorization;
@@ -59,6 +86,7 @@ const userRoutes = (app: express.Application) => {
   app.get("/users", index);
   app.get("/users/:id", show);
   app.post("/users/register", register);
+  app.post("/users/login", login);
 };
 
 export default userRoutes;
