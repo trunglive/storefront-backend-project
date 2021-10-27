@@ -32,7 +32,6 @@ const create = async (req: Request, res: Response) => {
 
   try {
     const product: Product = {
-      id: req.body.id,
       name: req.body.name,
       price: req.body.price,
     };
