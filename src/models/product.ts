@@ -30,7 +30,7 @@ export class ProductStore {
 
       return product;
     } catch (err) {
-      throw new Error(`Could not find product ${id}. Error: ${err}`);
+      throw new Error(`Unable to find product ${id}. Error: ${err}`);
     }
   }
   async create(p: Product): Promise<Product> {
@@ -45,7 +45,7 @@ export class ProductStore {
 
       return product;
     } catch (err) {
-      throw new Error(`Could not add new product ${p.name}. Error: ${err}`);
+      throw new Error(`Unable to add new product ${p.name}. Error: ${err}`);
     }
   }
   async delete(id: string): Promise<Product> {
@@ -59,7 +59,7 @@ export class ProductStore {
 
       return product;
     } catch (err) {
-      throw new Error(`Could not delete product ${id}. Error: ${err}`);
+      throw new Error(`Unable to delete product ${id}. Error: ${err}`);
     }
   }
 }
