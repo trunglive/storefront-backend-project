@@ -8,8 +8,8 @@ export type User = {
   password: string;
 };
 
-const pepper = process.env.BCRYPT_PASSWORD;
-const saltRounds = process.env.SALT_ROUNDS;
+const pepper = process.env.BCRYPT_PEPPER;
+const saltRounds = process.env.BCRYPT_SALT_ROUNDS;
 
 export class UserStore {
   async index(): Promise<User[]> {
@@ -45,9 +45,12 @@ export class UserStore {
       const sql =
         "INSERT INTO users (firstname, lastname, username, password) VALUES($1, $2, $3, $4) RETURNING *";
 
-      const hash = bcrypt.hashSync(u.password + pepper, parseInt(saltRounds));
-
-      const result = await conn.query(sql, [u.username, hash]);
+      const result = await conn.query(sql, [
+        u.firstname,
+        u.lastname,
+        u.username,
+        u.password,
+      ]);
       const user = result.rows[0];
 
       conn.release();
