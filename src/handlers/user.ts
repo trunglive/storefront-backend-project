@@ -21,8 +21,8 @@ const show = async (req: Request, res: Response) => {
 };
 
 const register = async (req: Request, res: Response) => {
-  const salt = await bcrypt.genSalt(parseInt(BCRYPT_SALT_ROUNDS as string));
   const pepperedPassword = `${req.headers.password}${BCRYPT_PEPPER}`;
+  const salt = await bcrypt.genSalt(parseInt(BCRYPT_SALT_ROUNDS as string));
   const hashPassword = bcrypt.hashSync(pepperedPassword, salt);
 
   try {
