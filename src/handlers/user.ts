@@ -58,7 +58,7 @@ const verifyAuthToken = (req: Request, res: Response, next: Function) => {
 const userRoutes = (app: express.Application) => {
   app.get("/users", index);
   app.get("/users/:id", show);
-  app.post("/users", register);
+  app.post("/users/register", register);
 };
 
 export default userRoutes;
