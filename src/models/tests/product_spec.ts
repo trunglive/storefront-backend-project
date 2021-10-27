@@ -8,28 +8,26 @@ describe("Product Model", () => {
   });
 
   it("should have a show method", () => {
-    expect(store.index).toBeDefined();
+    expect(store.show).toBeDefined();
   });
 
   it("should have a create method", () => {
-    expect(store.index).toBeDefined();
+    expect(store.create).toBeDefined();
   });
 
   it("should have a delete method", () => {
-    expect(store.index).toBeDefined();
+    expect(store.delete).toBeDefined();
   });
 
   it("create method should add a product", async () => {
     const result = await store.create({
-      id: 1,
-      name: "Francis Brock",
-      price: 8,
+      name: "banana",
+      price: 4,
     });
 
     expect(result).toEqual({
-      id: 1,
-      name: "Francis Brock",
-      price: 8,
+      name: "banana",
+      price: 4,
     });
   });
 
@@ -38,9 +36,8 @@ describe("Product Model", () => {
 
     expect(result).toEqual([
       {
-        id: 1,
-        name: "Francis Brock",
-        price: 8,
+        name: "banana",
+        price: 4,
       },
     ]);
   });
@@ -49,9 +46,8 @@ describe("Product Model", () => {
     const result = await store.show("1");
 
     expect(result).toEqual({
-      id: 1,
-      name: "Francis Brock",
-      price: 8,
+      name: "banana",
+      price: 4,
     });
   });
 
