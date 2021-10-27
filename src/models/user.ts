@@ -13,10 +13,11 @@ export class UserStore {
       const sql = "SELECT * from users";
       const conn = await Client.connect();
       const result = await conn.query(sql);
+      const users = result.rows;
 
       conn.release();
 
-      return result.rows;
+      return users;
     } catch (err) {
       throw new Error(`Unable to get all users. Error: ${err}`);
     }
@@ -35,11 +36,11 @@ export class UserStore {
       throw new Error(`Unable to find user ${id}. Error: ${err}`);
     }
   }
-  async create(u: User): Promise<User> {
+  async create(u: User): Promise<{ id: string; username: string }> {
     try {
-      const conn = await Client.connect();
       const sql =
         "INSERT INTO users (firstname, lastname, username, password) VALUES($1, $2, $3, $4) RETURNING *";
+      const conn = await Client.connect();
 
       const result = await conn.query(sql, [
         u.firstname,
@@ -47,21 +48,23 @@ export class UserStore {
         u.username,
         u.password,
       ]);
+
       const user = result.rows[0];
 
       conn.release();
 
-      return user;
+      return { id: user.id, username: user.username };
     } catch (err) {
       throw new Error(`Unable to create user ${u.username}: ${err}`);
     }
   }
 
-  async login(username: string): Promise<User> {
+  async login(
+    username: string
+  ): Promise<{ id: string; username: string; password: string }> {
     try {
-      const conn = await Client.connect();
       const sql = "SELECT * FROM users WHERE username=($1)";
-
+      const conn = await Client.connect();
       const result = await conn.query(sql, [username]);
       const user = result.rows[0];
 
