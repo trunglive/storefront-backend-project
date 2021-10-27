@@ -30,7 +30,7 @@ export class OrderStore {
 
       return order;
     } catch (err) {
-      throw new Error(`Could not find order ${id}. Error: ${err}`);
+      throw new Error(`Unable to find order ${id}. Error: ${err}`);
     }
   }
   async create(p: Order): Promise<Order> {
@@ -45,7 +45,7 @@ export class OrderStore {
 
       return order;
     } catch (err) {
-      throw new Error(`Could not add new order. Error: ${err}`);
+      throw new Error(`Unable to add new order. Error: ${err}`);
     }
   }
   async addProduct(
@@ -65,7 +65,7 @@ export class OrderStore {
       return order;
     } catch (err) {
       throw new Error(
-        `Could not add product ${productId} to order ${orderId}: ${err}`
+        `Unable to add product ${productId} to order ${orderId}: ${err}`
       );
     }
   }

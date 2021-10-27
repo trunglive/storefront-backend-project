@@ -1,5 +1,4 @@
 import Client from "../database";
-import bcrypt from "bcrypt";
 
 export type User = {
   firstname: string;
@@ -7,9 +6,6 @@ export type User = {
   username: string;
   password: string;
 };
-
-const pepper = process.env.BCRYPT_PEPPER;
-const saltRounds = process.env.BCRYPT_SALT_ROUNDS;
 
 export class UserStore {
   async index(): Promise<User[]> {
@@ -36,7 +32,7 @@ export class UserStore {
 
       return user;
     } catch (err) {
-      throw new Error(`Could not find user ${id}. Error: ${err}`);
+      throw new Error(`Unable to find user ${id}. Error: ${err}`);
     }
   }
   async create(u: User): Promise<User> {
@@ -57,28 +53,23 @@ export class UserStore {
 
       return user;
     } catch (err) {
-      throw new Error(`unable create user (${u.username}): ${err}`);
+      throw new Error(`Unable to create user ${u.username}: ${err}`);
     }
   }
 
-  async authenticate(username: string, password: string): Promise<User | null> {
-    const conn = await Client.connect();
-    const sql = "SELECT password FROM users WHERE username=($1)";
+  async login(username: string): Promise<User> {
+    try {
+      const conn = await Client.connect();
+      const sql = "SELECT * FROM users WHERE username=($1)";
 
-    const result = await conn.query(sql, [username]);
-
-    console.log(password + pepper);
-
-    if (result.rows.length) {
+      const result = await conn.query(sql, [username]);
       const user = result.rows[0];
 
-      console.log(user);
+      conn.release();
 
-      if (bcrypt.compareSync(password + pepper, user.password)) {
-        return user;
-      }
+      return user;
+    } catch (err) {
+      throw new Error(`Unable to login user ${username}: ${err}`);
     }
-
-    return null;
   }
 }
