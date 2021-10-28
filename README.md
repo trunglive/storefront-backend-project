@@ -48,6 +48,13 @@ npm run lint
 yarn run prettier
 ```
 
+#### Connect to PostgreSQL database
+
+```shell
+CREATE DATABASE storefront;
+CREATE DATABASE storefront_test;
+```
+
 #### API Endpoints
 
 List of available routes:
