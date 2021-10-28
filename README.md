@@ -60,9 +60,14 @@ List of available routes:
 `DELETE /products` - DELETE product
 
 `GET /users` - READ all users\
-`GET /users/:id` - READ specific user\
-`POST /users` - CREATE user\
-`DELETE /users` - DELETE user
+`GET /users/:username` - READ specific user\
+`POST /users/register` - CREATE user\
+`POST /users/login` - LOGIN user
+
+`GET /orders` - READ all orders\
+`GET /orders/:userId` - READ orders by user id\
+`POST /orders` - CREATE order\
+`POST /orders/products` - CREATE order with product quantity and product id
 
 #### Contributor
 
