@@ -19,20 +19,22 @@ export class ProductStore {
       throw new Error(`Unable to get all products. Error: ${err}`);
     }
   }
-  async show(id: string): Promise<Product> {
+
+  async show(name: string): Promise<Product> {
     try {
-      const sql = "SELECT * FROM products WHERE id=($1)";
+      const sql = "SELECT * FROM products WHERE name=($1)";
       const conn = await Client.connect();
-      const result = await conn.query(sql, [id]);
+      const result = await conn.query(sql, [name]);
       const product = result.rows[0];
 
       conn.release();
 
       return product;
     } catch (err) {
-      throw new Error(`Unable to find product ${id}. Error: ${err}`);
+      throw new Error(`Unable to find product ${name}. Error: ${err}`);
     }
   }
+
   async create(p: Product): Promise<Product> {
     try {
       const sql =
@@ -48,18 +50,19 @@ export class ProductStore {
       throw new Error(`Unable to add new product ${p.name}. Error: ${err}`);
     }
   }
-  async delete(id: string): Promise<Product> {
+
+  async delete(name: string): Promise<Product> {
     try {
-      const sql = "DELETE FROM products WHERE id=($1)";
+      const sql = "DELETE FROM products WHERE name=($1)";
       const conn = await Client.connect();
-      const result = await conn.query(sql, [id]);
+      const result = await conn.query(sql, [name]);
       const product = result.rows[0];
 
       conn.release();
 
       return product;
     } catch (err) {
-      throw new Error(`Unable to delete product ${id}. Error: ${err}`);
+      throw new Error(`Unable to delete product ${name}. Error: ${err}`);
     }
   }
 }

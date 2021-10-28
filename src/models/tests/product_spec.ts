@@ -8,57 +8,54 @@ describe("Product Model", () => {
   });
 
   it("should have a show method", () => {
-    expect(store.index).toBeDefined();
+    expect(store.show).toBeDefined();
   });
 
   it("should have a create method", () => {
-    expect(store.index).toBeDefined();
+    expect(store.create).toBeDefined();
   });
 
   it("should have a delete method", () => {
-    expect(store.index).toBeDefined();
+    expect(store.delete).toBeDefined();
   });
 
   it("create method should add a product", async () => {
-    const result = await store.create({
-      id: 1,
-      name: "Francis Brock",
-      price: 8,
+    const { name, price } = await store.create({
+      name: "banana",
+      price: 4,
     });
 
-    expect(result).toEqual({
-      id: 1,
-      name: "Francis Brock",
-      price: 8,
+    expect({ name, price }).toEqual({
+      name: "banana",
+      price: 4,
     });
   });
 
   it("index method should return a list of products", async () => {
-    const result = await store.index();
+    const [{ name, price }] = await store.index();
 
-    expect(result).toEqual([
+    expect([{ name, price }]).toEqual([
       {
-        id: 1,
-        name: "Francis Brock",
-        price: 8,
+        name: "banana",
+        price: 4,
       },
     ]);
   });
 
   it("show method should return the correct product", async () => {
-    const result = await store.show("1");
+    const { name, price } = await store.show("banana");
 
-    expect(result).toEqual({
-      id: 1,
-      name: "Francis Brock",
-      price: 8,
+    expect({ name, price }).toEqual({
+      name: "banana",
+      price: 4,
     });
   });
 
   it("delete method should remove the product", async () => {
-    await store.delete("1");
-    const result = await store.index();
+    await store.delete("banana");
+    const result = await store.show("banana");
 
-    expect(result).toEqual([]);
+    // @ts-ignore
+    expect(result).toBe(undefined);
   });
 });
