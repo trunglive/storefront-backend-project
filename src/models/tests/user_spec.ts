@@ -1,6 +1,8 @@
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
+import jwt from "jsonwebtoken";
 import { User, UserStore } from "../user";
+import { parseJwt } from "../../utils/parseJwt";
 
 dotenv.config();
 
@@ -66,6 +68,22 @@ describe("User Model", () => {
     });
   });
 
-  // it("login method should generate the token", async () => {
-  // });
+  it("login method should return the token", async () => {
+    const foundUser = await store.login("daniela035");
+    expect(foundUser).toBeDefined();
+
+    const pepperedPassword = `Daa48172${BCRYPT_PEPPER}`;
+    const validPassword = bcrypt.compareSync(
+      pepperedPassword,
+      foundUser.password
+    );
+    expect(validPassword).toBeTrue();
+
+    const token = jwt.sign(
+      { username: foundUser.username },
+      BCRYPT_TOKEN_SECRET as string
+    );
+    const { username } = parseJwt(token);
+    expect(username).toBe(foundUser.username);
+  });
 });
