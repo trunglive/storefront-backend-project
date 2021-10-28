@@ -22,20 +22,22 @@ export class UserStore {
       throw new Error(`Unable to get all users. Error: ${err}`);
     }
   }
-  async show(id: string): Promise<User> {
+
+  async show(username: string): Promise<User> {
     try {
-      const sql = "SELECT * FROM users WHERE id=($1)";
+      const sql = "SELECT * FROM users WHERE username=($1)";
       const conn = await Client.connect();
-      const result = await conn.query(sql, [id]);
+      const result = await conn.query(sql, [username]);
       const user = result.rows[0];
 
       conn.release();
 
       return user;
     } catch (err) {
-      throw new Error(`Unable to find user ${id}. Error: ${err}`);
+      throw new Error(`Unable to find user ${username}. Error: ${err}`);
     }
   }
+
   async create(u: User): Promise<{ id: string; username: string }> {
     try {
       const sql =

@@ -17,7 +17,7 @@ const index = async (_req: Request, res: Response) => {
 };
 
 const show = async (req: Request, res: Response) => {
-  const user = await store.show(req.params.id);
+  const user = await store.show(req.params.username);
   res.json(user);
 };
 
@@ -34,8 +34,8 @@ const register = async (req: Request, res: Response) => {
       password: hashPassword as string,
     };
 
-    const newUser = await store.create(user);
-    res.json(newUser);
+    const { id, username } = await store.create(user);
+    res.json({ id, username });
   } catch (err) {
     res.status(400);
     res.json(err);
