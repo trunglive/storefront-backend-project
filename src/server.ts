@@ -10,7 +10,7 @@ const address: string = "0.0.0.0:3000";
 app.use(bodyParser.json());
 
 app.get("/", function (req: Request, res: Response) {
-  res.send("Hello World!");
+  res.send("This is homepage of storefront project");
 });
 
 productRoutes(app);
