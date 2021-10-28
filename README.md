@@ -1,6 +1,6 @@
 #### Storefront Backend Project
 
-#### Case Study
+#### Summary
 > The company's stakeholders have decided that they want to create an online store where their product ideas can be purchased – and they want me and a coworker to build it.
 The stakeholders have compiled a list of prerequisites for this online store. My coworker will build the frontend, while I will `provide the backend`, and the requirements have been compiled into a requirements document.
 I'll `build the database`, including tables and columns, to meet the data requirements, and then `write a RESTful API` to expose that information to the frontend developer.
@@ -34,25 +34,25 @@ $ npm start
 Testing:
 
 ```shell
-#  compile to JS code & run test
-npm run test
+# compile to JS code & run test
+$ npm run test
 ```
 
 Linting:
 
 ```shell
 # run ESLint
-npm run lint
+$ npm run lint
 
 # run Prettier
-yarn run prettier
+$ yarn run prettier
 ```
 
 #### Connect to PostgreSQL database
 
 ```shell
-CREATE DATABASE storefront;
-CREATE DATABASE storefront_test;
+$ CREATE DATABASE storefront;
+$ CREATE DATABASE storefront_test;
 ```
 
 #### API Endpoints
