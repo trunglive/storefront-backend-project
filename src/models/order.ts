@@ -19,26 +19,30 @@ export class OrderStore {
       throw new Error(`Unable to get all orders. Error: ${err}`);
     }
   }
-  async show(id: string): Promise<Order> {
+
+  async show(userId: string): Promise<Order> {
     try {
-      const sql = "SELECT * FROM orders WHERE id=($1)";
+      const sql = "SELECT * FROM orders WHERE user_id=($1)";
       const conn = await Client.connect();
-      const result = await conn.query(sql, [id]);
+      const result = await conn.query(sql, [userId]);
       const order = result.rows[0];
 
       conn.release();
 
       return order;
     } catch (err) {
-      throw new Error(`Unable to find order ${id}. Error: ${err}`);
+      throw new Error(
+        `Unable to find orders from user ${userId}. Error: ${err}`
+      );
     }
   }
-  async create(p: Order): Promise<Order> {
+
+  async create(o: Order): Promise<Order> {
     try {
       const sql =
         "INSERT INTO orders (status, user_id) VALUES($1, $2) RETURNING *";
       const conn = await Client.connect();
-      const result = await conn.query(sql, [p.status, p.userId]);
+      const result = await conn.query(sql, [o.status, o.userId]);
       const order = result.rows[0];
 
       conn.release();
@@ -48,6 +52,7 @@ export class OrderStore {
       throw new Error(`Unable to add new order. Error: ${err}`);
     }
   }
+
   async addProduct(
     quantity: number,
     orderId: string,
