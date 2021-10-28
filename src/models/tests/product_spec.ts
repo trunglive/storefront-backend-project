@@ -20,21 +20,21 @@ describe("Product Model", () => {
   });
 
   it("create method should add a product", async () => {
-    const result = await store.create({
+    const { name, price } = await store.create({
       name: "banana",
       price: 4,
     });
 
-    expect(result).toEqual({
+    expect({ name, price }).toEqual({
       name: "banana",
       price: 4,
     });
   });
 
   it("index method should return a list of products", async () => {
-    const result = await store.index();
+    const [{ name, price }] = await store.index();
 
-    expect(result).toEqual([
+    expect([{ name, price }]).toEqual([
       {
         name: "banana",
         price: 4,
@@ -43,18 +43,19 @@ describe("Product Model", () => {
   });
 
   it("show method should return the correct product", async () => {
-    const result = await store.show("1");
+    const { name, price } = await store.show("banana");
 
-    expect(result).toEqual({
+    expect({ name, price }).toEqual({
       name: "banana",
       price: 4,
     });
   });
 
   it("delete method should remove the product", async () => {
-    await store.delete("1");
-    const result = await store.index();
+    await store.delete("banana");
+    const result = await store.show("banana");
 
-    expect(result).toEqual([]);
+    // @ts-ignore
+    expect(result).toBe(undefined);
   });
 });
