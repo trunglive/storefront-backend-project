@@ -79,4 +79,19 @@ describe("Order Model", () => {
       user_id: "1",
     });
   });
+
+  it("add product method should add an order with product quantity and product id", async () => {
+    // @ts-ignore
+    const { quantity, order_id, product_id } = await store.addProduct({
+      quantity: 4,
+      orderId: 1,
+      productId: 1,
+    });
+
+    expect({ quantity, order_id, product_id }).toEqual({
+      quantity: 4,
+      order_id: "1",
+      product_id: "1",
+    });
+  });
 });

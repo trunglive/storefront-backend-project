@@ -5,6 +5,12 @@ export type Order = {
   userId: number;
 };
 
+export type OrderProduct = {
+  quantity: number;
+  orderId: number;
+  productId: number;
+};
+
 export class OrderStore {
   async index(): Promise<Order[]> {
     try {
@@ -53,16 +59,16 @@ export class OrderStore {
     }
   }
 
-  async addProduct(
-    quantity: number,
-    orderId: string,
-    productId: string
-  ): Promise<Order> {
+  async addProduct(o: OrderProduct): Promise<Order> {
     try {
       const sql =
         "INSERT INTO order_products (quantity, order_id, product_id) VALUES($1, $2, $3) RETURNING *";
       const conn = await Client.connect();
-      const result = await conn.query(sql, [quantity, orderId, productId]);
+      const result = await conn.query(sql, [
+        o.quantity,
+        o.orderId,
+        o.productId,
+      ]);
       const order = result.rows[0];
 
       conn.release();
@@ -70,7 +76,7 @@ export class OrderStore {
       return order;
     } catch (err) {
       throw new Error(
-        `Unable to add product ${productId} to order ${orderId}: ${err}`
+        `Unable to add product ${o.productId} to order ${o.orderId}: ${err}`
       );
     }
   }
