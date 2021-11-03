@@ -7,6 +7,7 @@
     "start": "ts-node src/server.ts",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess 'node ./dist/server.js'",
     "test": "db-migrate --env test up && ENV=test jasmine-ts && db-migrate --env test down",
+    "dev": "db-migrate --env dev up && ENV=dev jasmine-ts && db-migrate --env dev down",
     "tsc": "tsc"
   },
   "keywords": [],
