@@ -1,4 +1,4 @@
-#### Storefront Backend Project
+### Storefront Backend Project
 
 #### Summary
 > The company's stakeholders have decided that they want to create an online store where their product ideas can be purchased – and they want me and a coworker to build it.
@@ -14,13 +14,13 @@ In order to be ready for beta testing, my application needs to `have tests`, `se
 * [Jasmine](https://github.com/jasmine/jasmine)
 * [PostgreSQL](https://github.com/postgres/postgres)
 
-#### Clone the project:
+#### Clone the project
 
 ```shell
 $ git clone git@github.com:trunglive/storefront-backend-project.git
 ```
 
-#### Run on local:
+#### Run on local
 
 ```shell
 $ cd storefront-backend-project
@@ -28,7 +28,7 @@ $ npm install
 $ npm start
 ```
 
-#### Linting:
+#### Linting
 
 ```shell
 # run ESLint
@@ -36,18 +36,6 @@ $ npm run lint
 
 # run Prettier
 $ yarn run prettier
-```
-
-#### Migration script for `test` database
-
-```shell
-$ npm run test
-```
-
-#### Migration script for `dev` database
-
-```shell
-$ npm run dev
 ```
 
 #### Initialize PostgreSQL and connect to database
@@ -69,15 +57,27 @@ $ \c storefront
 $ \q
 ```
 
+#### Migration script for `test` database
+
+```shell
+$ npm run test
+```
+
+#### Migration script for `dev` database
+
+```shell
+$ npm run dev
+```
+
 #### Environment Variables
 
 The environment variables are available in the `.env` file.
 
 ```shell
-# Port number
+# port number
 PORT=3000
 
-# Default env
+# default env
 ENV=dev
 
 # PostgreSQL database for dev
@@ -86,10 +86,10 @@ POSTGRES_DB=storefront
 POSTGRES_USER=postgres
 POSTGRES_PASSWORD=1234
 
-# Database for testing
+# database for testing
 POSTGRES_TEST_DB=storefront_test
 
-# Password encryption
+# password encryption
 BCRYPT_SALT_ROUNDS=10
 BCRYPT_PEPPER=5Ffja@9spfaA#
 
