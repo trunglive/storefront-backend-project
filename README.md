@@ -74,10 +74,10 @@ $ \q
 The environment variables are available in the `.env` file.
 
 ```shell
-# Port number
+# port number
 PORT=3000
 
-# Default env
+# default env
 ENV=dev
 
 # PostgreSQL database for dev
@@ -86,10 +86,10 @@ POSTGRES_DB=storefront
 POSTGRES_USER=postgres
 POSTGRES_PASSWORD=1234
 
-# Database for testing
+# database for testing
 POSTGRES_TEST_DB=storefront_test
 
-# Password encryption
+# password encryption
 BCRYPT_SALT_ROUNDS=10
 BCRYPT_PEPPER=5Ffja@9spfaA#
 
