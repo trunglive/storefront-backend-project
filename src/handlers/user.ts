@@ -44,12 +44,12 @@ const register = async (req: Request, res: Response) => {
 
 const login = async (req: Request, res: Response) => {
   try {
-    const foundUser = await store.login(req.headers.username as string);
+    const foundUser = await store.login(req.body.username as string);
     if (!foundUser) {
       return res.status(400).send("Username is wrong");
     }
 
-    const pepperedPassword = `${req.headers.password}${BCRYPT_PEPPER}`;
+    const pepperedPassword = `${req.body.password}${BCRYPT_PEPPER}`;
     const validPassword = bcrypt.compareSync(
       pepperedPassword,
       foundUser.password

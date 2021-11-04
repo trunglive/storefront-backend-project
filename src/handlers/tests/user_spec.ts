@@ -47,9 +47,10 @@ describe("User Handler", () => {
   });
 
   it("should return success for LOGIN user", async (done) => {
-    const response = await request
-      .delete("/users/login")
-      .send({ username: "daniela035", password: "Daa48172" });
+    const response = await request.post("/users/login").send({
+      username: userInstance.username,
+      password: userInstance.password,
+    });
 
     expect(response.status).toBe(200);
     expect(response.body).toBeTruthy();
