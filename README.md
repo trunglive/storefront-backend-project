@@ -104,7 +104,7 @@ List of available routes:
 `GET /` - homepage
 
 `GET /products` - READ all products\
-`GET /products/:id` - READ specific product by product id\
+`GET /products/:productName` - READ specific product by product name\
 `POST /products` - CREATE product\
 `DELETE /products` - DELETE product by product id
 
