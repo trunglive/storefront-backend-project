@@ -17,8 +17,8 @@ const show = async (req: Request, res: Response) => {
 const create = async (req: Request, res: Response) => {
   try {
     const product: Product = {
-      name: req.headers.name as string,
-      price: (req.headers.price as unknown) as number,
+      name: req.body.name as string,
+      price: (req.body.price as unknown) as number,
     };
 
     const newProduct = await store.create(product);
@@ -31,7 +31,7 @@ const create = async (req: Request, res: Response) => {
 
 const destroy = async (req: Request, res: Response) => {
   try {
-    await store.delete(req.headers.id as string);
+    await store.delete(req.body.name as string);
     res.json({ status: "success" });
   } catch (error) {
     res.status(400);

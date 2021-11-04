@@ -35,7 +35,7 @@ describe("Order Handler", () => {
     const response = await request
       .delete("/products")
       .auth(token, { type: "bearer" })
-      .send({ id: 2 });
+      .send({ name: "strawberry" });
 
     expect(response.status).toBe(200);
     expect(response.body).toBeTruthy();
