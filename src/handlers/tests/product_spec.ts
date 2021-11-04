@@ -15,7 +15,7 @@ describe("Order Handler", () => {
   });
 
   it("should return success for READ specific product", async () => {
-    const response = await request.get("/products/1");
+    const response = await request.get("/products").send({ id: 1 });
 
     expect(response.status).toBe(200);
     expect(response.body).toBeTruthy();
