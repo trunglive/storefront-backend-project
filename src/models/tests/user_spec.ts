@@ -53,7 +53,8 @@ describe("User Model", () => {
   });
 
   it("index method should return a list of users", async () => {
-    const [{ firstname, lastname, username }] = await store.index();
+    const userList = await store.index();
+    const { firstname, lastname, username } = userList[1];
 
     expect([{ firstname, lastname, username }]).toEqual([userInstance]);
   });
