@@ -6,8 +6,8 @@
 #### Products
 - Index
 - Show (args: product name)
-- Create [token required]
-- Delete [token required]
+- Create (args: product name, product price) [token required]
+- Delete (args: product id) [token required]
 
 #### Users
 - Index [token required]
@@ -18,9 +18,9 @@
 - Index
 - Show (args: user id)
 - Create order (args: status, user id) [token required]
-- Create order (args: quantity, order id, product id) [token required]
+- Create order with product quantity and product id (args: quantity, order id, product id) [token required]
 
-## Data Shapes
+### Data Shapes
 #### Products
 -  id
 - name
@@ -35,7 +35,7 @@
 
 #### Orders
 - id
-- status of order (ordered / shipped / delivered)
+- status of order (`ordered` / `shipped` / `delivered`)
 - user_id
 
 #### Order Products
