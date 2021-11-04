@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { User, UserStore } from "../models/user";
-import verifyAuthToken from "./verifyAuthToken";
+import verifyAuthToken from "../middleware/verifyAuthToken";
 
 dotenv.config();
 
@@ -22,15 +22,15 @@ const show = async (req: Request, res: Response) => {
 };
 
 const register = async (req: Request, res: Response) => {
-  const pepperedPassword = `${req.headers.password}${BCRYPT_PEPPER}`;
+  const pepperedPassword = `${req.body.password}${BCRYPT_PEPPER}`;
   const salt = await bcrypt.genSalt(parseInt(BCRYPT_SALT_ROUNDS as string));
   const hashPassword = bcrypt.hashSync(pepperedPassword, salt);
 
   try {
     const user: User = {
-      firstname: req.headers.firstname as string,
-      lastname: req.headers.lastname as string,
-      username: req.headers.username as string,
+      firstname: req.body.firstname as string,
+      lastname: req.body.lastname as string,
+      username: req.body.username as string,
       password: hashPassword as string,
     };
 
@@ -44,12 +44,12 @@ const register = async (req: Request, res: Response) => {
 
 const login = async (req: Request, res: Response) => {
   try {
-    const foundUser = await store.login(req.headers.username as string);
+    const foundUser = await store.login(req.body.username as string);
     if (!foundUser) {
       return res.status(400).send("Username is wrong");
     }
 
-    const pepperedPassword = `${req.headers.password}${BCRYPT_PEPPER}`;
+    const pepperedPassword = `${req.body.password}${BCRYPT_PEPPER}`;
     const validPassword = bcrypt.compareSync(
       pepperedPassword,
       foundUser.password

@@ -14,31 +14,21 @@ In order to be ready for beta testing, my application needs to `have tests`, `se
 * [Jasmine](https://github.com/jasmine/jasmine)
 * [PostgreSQL](https://github.com/postgres/postgres)
 
-#### Commands
-
-Clone the project:
+#### Clone the project:
 
 ```shell
 $ git clone git@github.com:trunglive/storefront-backend-project.git
 ```
 
-Running locally:
+#### Run on local:
 
 ```shell
 $ cd storefront-backend-project
-$ git switch develop
 $ npm install
 $ npm start
 ```
 
-Testing:
-
-```shell
-# compile to JS code & run test
-$ npm run test
-```
-
-Linting:
+#### Linting:
 
 ```shell
 # run ESLint
@@ -48,11 +38,63 @@ $ npm run lint
 $ yarn run prettier
 ```
 
-#### Connect to PostgreSQL database
+#### Migration script for `test` database
 
 ```shell
+$ npm run test
+```
+
+#### Migration script for `dev` database
+
+```shell
+$ npm run dev
+```
+
+#### Initialize PostgreSQL and connect to database
+
+```shell
+# start PostgreSQL
+$ psql -h localhost -U postgres
+
+# create database for dev env
 $ CREATE DATABASE storefront;
-$ CREATE DATABASE storefront_test;
+
+# list out all databases
+$ \dt
+
+# connect to database
+$ \c storefront
+
+# quit PostgreSQL
+$ \q
+```
+
+#### Environment Variables
+
+The environment variables are available in the `.env` file.
+
+```shell
+# Port number
+PORT=3000
+
+# Default env
+ENV=dev
+
+# PostgreSQL database for dev
+POSTGRES_HOST=127.0.0.1
+POSTGRES_DB=storefront
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=1234
+
+# Database for testing
+POSTGRES_TEST_DB=storefront_test
+
+# Password encryption
+BCRYPT_SALT_ROUNDS=10
+BCRYPT_PEPPER=5Ffja@9spfaA#
+
+# JWT
+JWT_TOKEN_SECRET=Sog@*Fos2*7
 ```
 
 #### API Endpoints
@@ -62,12 +104,12 @@ List of available routes:
 `GET /` - homepage
 
 `GET /products` - READ all products\
-`GET /products/:id` - READ specific product\
+`GET /products/:id` - READ specific product by product id\
 `POST /products` - CREATE product\
-`DELETE /products` - DELETE product
+`DELETE /products` - DELETE product by product id
 
 `GET /users` - READ all users\
-`GET /users/:username` - READ specific user\
+`GET /users/:username` - READ specific user by username\
 `POST /users/register` - CREATE user\
 `POST /users/login` - LOGIN user
 
