@@ -22,15 +22,15 @@ const show = async (req: Request, res: Response) => {
 };
 
 const register = async (req: Request, res: Response) => {
-  const pepperedPassword = `${req.headers.password}${BCRYPT_PEPPER}`;
+  const pepperedPassword = `${req.body.password}${BCRYPT_PEPPER}`;
   const salt = await bcrypt.genSalt(parseInt(BCRYPT_SALT_ROUNDS as string));
   const hashPassword = bcrypt.hashSync(pepperedPassword, salt);
 
   try {
     const user: User = {
-      firstname: req.headers.firstname as string,
-      lastname: req.headers.lastname as string,
-      username: req.headers.username as string,
+      firstname: req.body.firstname as string,
+      lastname: req.body.lastname as string,
+      username: req.body.username as string,
       password: hashPassword as string,
     };
 

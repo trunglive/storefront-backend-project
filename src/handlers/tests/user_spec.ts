@@ -12,6 +12,13 @@ dotenv.config();
 
 const { BCRYPT_SALT_ROUNDS, BCRYPT_PEPPER, BCRYPT_TOKEN_SECRET } = process.env;
 
+const userInstance = {
+  firstname: "Anthony",
+  lastname: "Dan",
+  username: "antdn238-user-handler-test",
+  password: "CpsodK3918",
+};
+
 describe("User Handler", () => {
   it("should return success for READ all users", async () => {
     const response = await request
@@ -33,16 +40,7 @@ describe("User Handler", () => {
   });
 
   it("should return success for CREATE user", async () => {
-    const pepperedPassword = `Daa48172${BCRYPT_PEPPER}`;
-    const salt = await bcrypt.genSalt(parseInt(BCRYPT_SALT_ROUNDS as string));
-    const hashPassword = bcrypt.hashSync(pepperedPassword, salt);
-
-    const response = await request.post("/users/register").send({
-      firstname: "Daniel",
-      lastname: "Austin",
-      username: "daniela035",
-      password: hashPassword,
-    });
+    const response = await request.post("/users/register").send(userInstance);
 
     expect(response.status).toBe(200);
     expect(response.body).toBeTruthy();
