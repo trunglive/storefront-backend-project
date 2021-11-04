@@ -12,16 +12,22 @@ const store = new OrderStore();
 const userStore = new UserStore();
 const productStore = new ProductStore();
 
+const userInstance = {
+  firstname: "Jennifer",
+  lastname: "Kim",
+  username: "jesoik-order-model-test",
+};
+
+const userInstancePassword = "Aoe1y381o";
+
 describe("Order Model", () => {
   beforeAll(async () => {
-    const pepperedPassword = `Daa48172${BCRYPT_PEPPER}`;
+    const pepperedPassword = `${userInstancePassword}${BCRYPT_PEPPER}`;
     const salt = await bcrypt.genSalt(parseInt(BCRYPT_SALT_ROUNDS as string));
     const hashPassword = bcrypt.hashSync(pepperedPassword, salt);
 
     const user: User = {
-      firstname: "Daniel",
-      lastname: "Austin",
-      username: "daniela035",
+      ...userInstance,
       password: hashPassword as string,
     };
     await userStore.create(user);
