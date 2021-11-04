@@ -31,9 +31,9 @@ const create = async (req: Request, res: Response) => {
 
 const addProduct = async (req: Request, res: Response) => {
   const orderProduct: OrderProduct = {
-    quantity: (req.headers.quantity as unknown) as number,
-    orderId: (req.headers.orderId as unknown) as number,
-    productId: (req.headers.productId as unknown) as number,
+    quantity: (req.body.quantity as unknown) as number,
+    orderId: (req.body.orderId as unknown) as number,
+    productId: (req.body.productId as unknown) as number,
   };
 
   try {

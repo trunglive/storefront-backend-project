@@ -65,8 +65,9 @@ describe("Order Model", () => {
   });
 
   it("index method should return a list of all orders", async () => {
+    const orderList = await store.index();
     // @ts-ignore
-    const [{ status, user_id }] = await store.index();
+    const { status, user_id } = orderList[1];
 
     expect([{ status, user_id }]).toEqual([
       {
