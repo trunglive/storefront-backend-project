@@ -15,7 +15,7 @@ describe("Order Handler", () => {
   });
 
   it("should return success for READ orders by user id", async () => {
-    const response = await request.get("/orders/1");
+    const response = await request.get("/orders").send("userId=1");
 
     expect(response.status).toBe(200);
     expect(response.body).toBeTruthy();
