@@ -24,8 +24,10 @@ describe("Product Handler", () => {
     expect(response.body).toBeTruthy();
   });
 
-  it("should return success for READ specific product", async () => {
-    const response = await request.get("/products").send({ id: 1 });
+  it("should return success for READ product by product name", async () => {
+    const response = await request
+      .get("/products")
+      .send({ productName: "strawberry" });
 
     expect(response.status).toBe(200);
     expect(response.body).toBeTruthy();
@@ -37,7 +39,6 @@ describe("Product Handler", () => {
       .auth(token, { type: "bearer" })
       .send({ productName: "strawberry" });
 
-    console.log({ status: response.status });
     expect(response.status).toBe(200);
     expect(response.body).toBeTruthy();
   });
