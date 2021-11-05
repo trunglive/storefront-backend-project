@@ -77,4 +77,19 @@ export class UserStore {
       throw new Error(`Unable to login user ${username}: ${err}`);
     }
   }
+
+  async delete(username: string): Promise<User> {
+    try {
+      const sql = "DELETE FROM users WHERE username=($1)";
+      const conn = await Client.connect();
+      const result = await conn.query(sql, [username]);
+      const user = result.rows[0];
+
+      conn.release();
+
+      return user;
+    } catch (err) {
+      throw new Error(`Unable to delete user ${username}. Error: ${err}`);
+    }
+  }
 }

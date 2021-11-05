@@ -10,7 +10,7 @@ const index = async (_req: Request, res: Response) => {
 };
 
 const show = async (req: Request, res: Response) => {
-  const product = await store.show(req.params.id);
+  const product = await store.show(req.params.productName);
   res.json(product);
 };
 
@@ -31,7 +31,7 @@ const create = async (req: Request, res: Response) => {
 
 const destroy = async (req: Request, res: Response) => {
   try {
-    await store.delete(req.body.name as string);
+    await store.delete(req.body.productName as string);
     res.json({ status: "success" });
   } catch (error) {
     res.status(400);

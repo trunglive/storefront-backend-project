@@ -13,12 +13,14 @@
 - Index [token required]
 - Show (args: username) [token required]
 - Create (args: firstname, lastname, username, password)
+- Delete (args: username)
 
 #### Orders
 - Index
 - Show (args: user id)
 - Create order (args: status, user id) [token required]
 - Create order with product quantity and product id (args: quantity, order id, product id) [token required]
+- Delete (args: order id)
 
 ### Data Shapes
 #### Products

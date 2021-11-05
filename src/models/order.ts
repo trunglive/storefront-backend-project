@@ -80,4 +80,19 @@ export class OrderStore {
       );
     }
   }
+
+  async delete(orderId: string): Promise<Order> {
+    try {
+      const sql = "DELETE FROM orders WHERE id=($1)";
+      const conn = await Client.connect();
+      const result = await conn.query(sql, [orderId]);
+      const order = result.rows[0];
+
+      conn.release();
+
+      return order;
+    } catch (err) {
+      throw new Error(`Unable to delete order ${orderId}. Error: ${err}`);
+    }
+  }
 }
