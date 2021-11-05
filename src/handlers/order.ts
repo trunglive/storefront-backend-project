@@ -17,8 +17,8 @@ const show = async (req: Request, res: Response) => {
 const create = async (req: Request, res: Response) => {
   try {
     const order: Order = {
-      status: req.headers.status as string,
-      userId: (req.headers.userId as unknown) as number,
+      status: req.body.status as string,
+      userId: (req.body.userId as unknown) as number,
     };
 
     const newOrder = await store.create(order);
@@ -45,11 +45,22 @@ const addProduct = async (req: Request, res: Response) => {
   }
 };
 
+const destroy = async (req: Request, res: Response) => {
+  try {
+    await store.delete(req.body.orderId as string);
+    res.json({ status: "success" });
+  } catch (error) {
+    res.status(400);
+    res.json({ error });
+  }
+};
+
 const orderRoutes = (app: express.Application) => {
   app.get("/orders", index);
   app.get("/orders/:userId", show);
   app.post("/orders", verifyAuthToken, create);
   app.post("/orders/products", verifyAuthToken, addProduct);
+  app.delete("/orders", destroy);
 };
 
 export default orderRoutes;
