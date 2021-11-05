@@ -35,6 +35,10 @@ describe("User Model", () => {
     expect(store.login).toBeDefined();
   });
 
+  it("should have a DELETE method", () => {
+    expect(store.delete).toBeDefined();
+  });
+
   it("CREATE method should add a user", async () => {
     const pepperedPassword = `${userInstancePassword}${BCRYPT_PEPPER}`;
     const salt = await bcrypt.genSalt(parseInt(BCRYPT_SALT_ROUNDS as string));

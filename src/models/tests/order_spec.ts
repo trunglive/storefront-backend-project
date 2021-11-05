@@ -50,12 +50,16 @@ describe("Order Model", () => {
   });
 
   it("should have a CREATE method", () => {
-    expect(store.create).toBeDefined();
+    expect(store.createOrder).toBeDefined();
+  });
+
+  it("should have a DELETE method", () => {
+    expect(store.deleteOrder).toBeDefined();
   });
 
   it("CREATE method should add an order", async () => {
     // @ts-ignore
-    const { status, user_id } = await store.create({
+    const { status, user_id } = await store.createOrder({
       status: "shipped", // ordered - shipped - delivered
       userId: 3,
     });
@@ -86,24 +90,31 @@ describe("Order Model", () => {
     });
   });
 
-  // it("add product method should add an order with product quantity and product id", async () => {
-  //   // @ts-ignore
-  //   const { quantity, order_id, product_id } = await store.addProduct({
-  //     quantity: 4,
-  //     orderId: 1,
-  //     productId: 1,
-  //   });
-  //
-  //   expect({ quantity, order_id, product_id }).toEqual({
-  //     quantity: 4,
-  //     order_id: "1",
-  //     product_id: "1",
-  //   });
-  // });
+  it("CREATE order product method should add an order with product quantity and product id", async () => {
+    // @ts-ignore
+    const { quantity, order_id, product_id } = await store.createOrderProduct({
+      quantity: 4,
+      orderId: 2,
+      productId: 3,
+    });
+
+    expect({ quantity, order_id, product_id }).toEqual({
+      quantity: 4,
+      order_id: "2",
+      product_id: "3",
+    });
+  });
+
+  it("DELETE order product method should remove an order product by order product id", async () => {
+    const result = await store.deleteOrderProduct("3");
+    // @ts-ignore
+    expect(result).toBe(undefined);
+  });
 
   afterAll(async () => {
+    await orderStore.deleteOrderProduct("2");
     await productStore.delete(productInstance.name);
-    await orderStore.delete("2");
+    await orderStore.deleteOrder("2");
     await userStore.delete(userInstance.username);
   });
 });
