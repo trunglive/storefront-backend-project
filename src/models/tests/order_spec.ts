@@ -2,11 +2,11 @@ import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 import { OrderStore } from "../order";
 import { User, UserStore } from "../user";
-import { Product, ProductStore } from "../product";
+import { ProductStore } from "../product";
 
 dotenv.config();
 
-const { BCRYPT_SALT_ROUNDS, BCRYPT_PEPPER, BCRYPT_TOKEN_SECRET } = process.env;
+const { BCRYPT_SALT_ROUNDS, BCRYPT_PEPPER } = process.env;
 
 const store = new OrderStore();
 const userStore = new UserStore();

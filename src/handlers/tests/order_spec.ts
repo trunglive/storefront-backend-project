@@ -3,14 +3,13 @@ import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 import app from "../../server";
 import { User, UserStore } from "../../models/user";
-import { Product, ProductStore } from "../../models/product";
+import { ProductStore } from "../../models/product";
 import { OrderStore } from "../../models/order";
 
 dotenv.config();
 
-const { BCRYPT_SALT_ROUNDS, BCRYPT_PEPPER, BCRYPT_TOKEN_SECRET } = process.env;
+const { BCRYPT_SALT_ROUNDS, BCRYPT_PEPPER } = process.env;
 
-const store = new OrderStore();
 const userStore = new UserStore();
 const productStore = new ProductStore();
 const orderStore = new OrderStore();

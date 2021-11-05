@@ -1,5 +1,4 @@
 import Client from "../database";
-import { Product } from "./product";
 
 export type User = {
   firstname: string;
@@ -79,7 +78,7 @@ export class UserStore {
     }
   }
 
-  async delete(username: string): Promise<Product> {
+  async delete(username: string): Promise<User> {
     try {
       const sql = "DELETE FROM users WHERE username=($1)";
       const conn = await Client.connect();

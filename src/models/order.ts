@@ -1,5 +1,4 @@
 import Client from "../database";
-import { Product } from "./product";
 
 export type Order = {
   status: string;

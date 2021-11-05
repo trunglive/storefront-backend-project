@@ -1,16 +1,10 @@
 import supertest from "supertest";
 import app from "../../server";
-import bcrypt from "bcrypt";
-import dotenv from "dotenv";
 
 const request = supertest(app);
 
 const token =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFudGRuMjM4LXVzZXItaGFuZGxlci10ZXN0IiwiaWF0IjoxNjM2MDgzNTYxfQ.TJlUQjkwOhLqHV7Olow-S5RP-d_ZO6-5o-U0cIBCbpU";
-
-dotenv.config();
-
-const { BCRYPT_SALT_ROUNDS, BCRYPT_PEPPER, BCRYPT_TOKEN_SECRET } = process.env;
 
 const userInstance = {
   firstname: "Anthony",
