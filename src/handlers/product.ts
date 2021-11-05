@@ -31,7 +31,7 @@ const create = async (req: Request, res: Response) => {
 
 const destroy = async (req: Request, res: Response) => {
   try {
-    await store.delete(req.body.name as string);
+    await store.delete(req.body.productName as string);
     res.json({ status: "success" });
   } catch (error) {
     res.status(400);
