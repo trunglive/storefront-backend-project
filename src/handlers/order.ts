@@ -14,14 +14,14 @@ const show = async (req: Request, res: Response) => {
   res.json(order);
 };
 
-const create = async (req: Request, res: Response) => {
+const createOrder = async (req: Request, res: Response) => {
   try {
     const order: Order = {
       status: req.body.status as string,
       userId: (req.body.userId as unknown) as number,
     };
 
-    const newOrder = await store.create(order);
+    const newOrder = await store.createOrder(order);
     res.json(newOrder);
   } catch (err) {
     res.status(400);
@@ -29,7 +29,17 @@ const create = async (req: Request, res: Response) => {
   }
 };
 
-const addProduct = async (req: Request, res: Response) => {
+const deleteOrder = async (req: Request, res: Response) => {
+  try {
+    await store.deleteOrder(req.body.orderId as string);
+    res.json({ status: "success" });
+  } catch (error) {
+    res.status(400);
+    res.json({ error });
+  }
+};
+
+const createOrderProduct = async (req: Request, res: Response) => {
   const orderProduct: OrderProduct = {
     quantity: (req.body.quantity as unknown) as number,
     orderId: (req.body.orderId as unknown) as number,
@@ -37,7 +47,7 @@ const addProduct = async (req: Request, res: Response) => {
   };
 
   try {
-    const addedProduct = await store.addProduct(orderProduct);
+    const addedProduct = await store.createOrderProduct(orderProduct);
     res.json(addedProduct);
   } catch (err) {
     res.status(400);
@@ -45,9 +55,9 @@ const addProduct = async (req: Request, res: Response) => {
   }
 };
 
-const destroy = async (req: Request, res: Response) => {
+const deleteOrderProduct = async (req: Request, res: Response) => {
   try {
-    await store.delete(req.body.orderId as string);
+    await store.deleteOrderProduct(req.body.orderProductId as string);
     res.json({ status: "success" });
   } catch (error) {
     res.status(400);
@@ -58,9 +68,10 @@ const destroy = async (req: Request, res: Response) => {
 const orderRoutes = (app: express.Application) => {
   app.get("/orders", index);
   app.get("/orders/:userId", show);
-  app.post("/orders", verifyAuthToken, create);
-  app.post("/orders/products", verifyAuthToken, addProduct);
-  app.delete("/orders", verifyAuthToken, destroy);
+  app.post("/orders", verifyAuthToken, createOrder);
+  app.delete("/orders", verifyAuthToken, deleteOrder);
+  app.post("/orders/products", verifyAuthToken, createOrderProduct);
+  app.delete("/orders/products", verifyAuthToken, deleteOrderProduct);
 };
 
 export default orderRoutes;

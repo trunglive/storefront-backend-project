@@ -71,6 +71,26 @@ describe("Order Handler", () => {
     expect(response.body).toBeTruthy();
   });
 
+  it("should return success for CREATE order with product quantity and product id", async () => {
+    const response = await request
+      .post("/orders/products")
+      .auth(token, { type: "bearer" })
+      .send({ quantity: 2, orderId: 1, productId: 1 });
+
+    expect(response.status).toBe(200);
+    expect(response.body).toBeTruthy();
+  });
+
+  it("should return success for DELETE order product with order product id", async () => {
+    const response = await request
+      .delete("/orders/products")
+      .auth(token, { type: "bearer" })
+      .send({ orderProductId: "1" });
+
+    expect(response.status).toBe(200);
+    expect(response.body).toBeTruthy();
+  });
+
   it("should return success for DELETE order by order id", async () => {
     const response = await request
       .delete("/orders")
@@ -80,16 +100,6 @@ describe("Order Handler", () => {
     expect(response.status).toBe(200);
     expect(response.body).toBeTruthy();
   });
-
-  // it("should return success for CREATE order with product quantity and product id", async () => {
-  //   const response = await request
-  //     .post("/orders/products")
-  //     .auth(token, { type: "bearer" })
-  //     .send({ quantity: 2, orderId: 1, productId: 1 });
-  //
-  //   expect(response.status).toBe(200);
-  //   expect(response.body).toBeTruthy();
-  // });
 
   afterAll(async () => {
     await productStore.delete(productInstance.name);
