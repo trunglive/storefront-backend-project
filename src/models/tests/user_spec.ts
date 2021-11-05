@@ -19,23 +19,23 @@ const userInstance = {
 const userInstancePassword = "CodDo128ao";
 
 describe("User Model", () => {
-  it("should have an index method", () => {
+  it("should have an INDEX method", () => {
     expect(store.index).toBeDefined();
   });
 
-  it("should have a show method", () => {
+  it("should have a SHOW method", () => {
     expect(store.show).toBeDefined();
   });
 
-  it("should have a create method", () => {
+  it("should have a CREATE method", () => {
     expect(store.create).toBeDefined();
   });
 
-  it("should have a login method", () => {
+  it("should have a LOGIN method", () => {
     expect(store.login).toBeDefined();
   });
 
-  it("create method should add a user", async () => {
+  it("CREATE method should add a user", async () => {
     const pepperedPassword = `${userInstancePassword}${BCRYPT_PEPPER}`;
     const salt = await bcrypt.genSalt(parseInt(BCRYPT_SALT_ROUNDS as string));
     const hashPassword = bcrypt.hashSync(pepperedPassword, salt);
@@ -52,14 +52,14 @@ describe("User Model", () => {
     });
   });
 
-  it("index method should return a list of users", async () => {
+  it("INDEX method should return a list of users", async () => {
     const userList = await store.index();
     const { firstname, lastname, username } = userList[0];
 
     expect([{ firstname, lastname, username }]).toEqual([userInstance]);
   });
 
-  it("show method should return the correct user", async () => {
+  it("SHOW method should return a user by username", async () => {
     const { firstname, lastname, username } = await store.show(
       userInstance.username
     );
@@ -67,7 +67,7 @@ describe("User Model", () => {
     expect({ firstname, lastname, username }).toEqual(userInstance);
   });
 
-  it("login method should return the token", async () => {
+  it("LOGIN method should return a token", async () => {
     const foundUser = await store.login(userInstance.username);
     expect(foundUser).toBeDefined();
 
@@ -86,7 +86,7 @@ describe("User Model", () => {
     expect(username).toBe(foundUser.username);
   });
 
-  it("delete method should delete a user", async () => {
+  it("DELETE method should delete a user by username", async () => {
     await store.delete(userInstance.username);
     const result = await store.show(userInstance.username);
 

@@ -33,7 +33,7 @@ describe("Product Handler", () => {
     expect(response.body).toBeTruthy();
   });
 
-  it("should return success for DELETE product", async () => {
+  it("should return success for DELETE product by product id", async () => {
     const response = await request
       .delete("/products")
       .auth(token, { type: "bearer" })

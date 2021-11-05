@@ -41,19 +41,19 @@ describe("Order Model", () => {
     await productStore.create(productInstance);
   });
 
-  it("should have an index method", () => {
+  it("should have an INDEX method", () => {
     expect(store.index).toBeDefined();
   });
 
-  it("should have a show method", () => {
+  it("should have a SHOW method", () => {
     expect(store.show).toBeDefined();
   });
 
-  it("should have a create method", () => {
+  it("should have a CREATE method", () => {
     expect(store.create).toBeDefined();
   });
 
-  it("create method should add an order", async () => {
+  it("CREATE method should add an order", async () => {
     // @ts-ignore
     const { status, user_id } = await store.create({
       status: "shipped", // ordered - shipped - delivered
@@ -66,7 +66,7 @@ describe("Order Model", () => {
     });
   });
 
-  it("index method should return a list of all orders", async () => {
+  it("INDEX method should return a list of all orders", async () => {
     // @ts-ignore
     const [{ status, user_id }] = await store.index();
 
@@ -76,7 +76,7 @@ describe("Order Model", () => {
     });
   });
 
-  it("show method should return the orders of a user", async () => {
+  it("SHOW method should return the orders of a user", async () => {
     // @ts-ignore
     const { status, user_id } = await store.show("3");
 

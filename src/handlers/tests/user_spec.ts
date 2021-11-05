@@ -36,11 +36,11 @@ describe("User Handler", () => {
     expect(response.body).toBeTruthy();
   });
 
-  it("should return success for READ specific user", async () => {
+  it("should return success for READ user by username", async () => {
     const response = await request
       .get("/users")
       .auth(token, { type: "bearer" })
-      .send("username=1");
+      .send(`username=${userInstance.username}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toBeTruthy();
@@ -56,7 +56,7 @@ describe("User Handler", () => {
     expect(response.body).toBeTruthy();
   });
 
-  it("should return success for DELETE user", async () => {
+  it("should return success for DELETE user by username", async () => {
     const response = await request.delete("/users").send({
       username: userInstance.username,
     });
