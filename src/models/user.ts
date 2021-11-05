@@ -1,4 +1,5 @@
 import Client from "../database";
+import { Product } from "./product";
 
 export type User = {
   firstname: string;
@@ -75,6 +76,21 @@ export class UserStore {
       return user;
     } catch (err) {
       throw new Error(`Unable to login user ${username}: ${err}`);
+    }
+  }
+
+  async delete(username: string): Promise<Product> {
+    try {
+      const sql = "DELETE FROM users WHERE username=($1)";
+      const conn = await Client.connect();
+      const result = await conn.query(sql, [username]);
+      const user = result.rows[0];
+
+      conn.release();
+
+      return user;
+    } catch (err) {
+      throw new Error(`Unable to delete user ${username}. Error: ${err}`);
     }
   }
 }

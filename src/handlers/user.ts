@@ -69,11 +69,21 @@ const login = async (req: Request, res: Response) => {
   }
 };
 
+const destroy = async (req: Request, res: Response) => {
+  try {
+    await store.delete(req.body.username as string);
+    res.json({ status: "success" });
+  } catch (error) {
+    res.status(400);
+    res.json({ error });
+  }
+};
+
 const userRoutes = (app: express.Application) => {
   app.get("/users", verifyAuthToken, index);
   app.get("/users/:id", verifyAuthToken, show);
   app.post("/users/register", register);
-  app.post("/users/login", login);
+  app.delete("/users", destroy);
 };
 
 export default userRoutes;
