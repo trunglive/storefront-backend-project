@@ -54,7 +54,7 @@ describe("User Model", () => {
 
   it("index method should return a list of users", async () => {
     const userList = await store.index();
-    const { firstname, lastname, username } = userList[2];
+    const { firstname, lastname, username } = userList[0];
 
     expect([{ firstname, lastname, username }]).toEqual([userInstance]);
   });
@@ -84,5 +84,13 @@ describe("User Model", () => {
     );
     const { username } = parseJwt(token);
     expect(username).toBe(foundUser.username);
+  });
+
+  it("delete method should delete a user", async () => {
+    await store.delete(userInstance.username);
+    const result = await store.show(userInstance.username);
+
+    // @ts-ignore
+    expect(result).toBe(undefined);
   });
 });

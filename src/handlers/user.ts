@@ -83,6 +83,7 @@ const userRoutes = (app: express.Application) => {
   app.get("/users", verifyAuthToken, index);
   app.get("/users/:id", verifyAuthToken, show);
   app.post("/users/register", register);
+  app.post("/users/login", login);
   app.delete("/users", destroy);
 };
 

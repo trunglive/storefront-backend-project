@@ -31,12 +31,13 @@ describe("Product Handler", () => {
     expect(response.body).toBeTruthy();
   });
 
-  it("should return success for DELETE product", async (done) => {
+  it("should return success for DELETE product", async () => {
     const response = await request
       .delete("/products")
       .auth(token, { type: "bearer" })
       .send({ productName: "strawberry" });
 
+    console.log({ status: response.status });
     expect(response.status).toBe(200);
     expect(response.body).toBeTruthy();
   });

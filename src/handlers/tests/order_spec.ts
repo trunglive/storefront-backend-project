@@ -72,7 +72,7 @@ describe("Order Handler", () => {
     expect(response.body).toBeTruthy();
   });
 
-  // it("should return success for CREATE order with product quantity and product id", async (done) => {
+  // it("should return success for CREATE order with product quantity and product id", async () => {
   //   const response = await request
   //     .post("/orders/products")
   //     .auth(token, { type: "bearer" })

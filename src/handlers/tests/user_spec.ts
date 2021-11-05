@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 const request = supertest(app);
 
 const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRydW5ndm82IiwiaWF0IjoxNjM1OTUyMTcyfQ.d2OFXpnjwcSnkFDv9ZuFiMXgpvIr2WZIbEHaKummVeU";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFudGRuMjM4LXVzZXItaGFuZGxlci10ZXN0IiwiaWF0IjoxNjM2MDgzNTYxfQ.TJlUQjkwOhLqHV7Olow-S5RP-d_ZO6-5o-U0cIBCbpU";
 
 dotenv.config();
 
@@ -20,6 +20,13 @@ const userInstance = {
 };
 
 describe("User Handler", () => {
+  it("should return success for CREATE user", async () => {
+    const response = await request.post("/users/register").send(userInstance);
+
+    expect(response.status).toBe(200);
+    expect(response.body).toBeTruthy();
+  });
+
   it("should return success for READ all users", async () => {
     const response = await request
       .get("/users")
@@ -39,17 +46,19 @@ describe("User Handler", () => {
     expect(response.body).toBeTruthy();
   });
 
-  it("should return success for CREATE user", async () => {
-    const response = await request.post("/users/register").send(userInstance);
+  it("should return success for LOGIN user", async () => {
+    const response = await request.post("/users/login").send({
+      username: userInstance.username,
+      password: userInstance.password,
+    });
 
     expect(response.status).toBe(200);
     expect(response.body).toBeTruthy();
   });
 
-  it("should return success for LOGIN user", async (done) => {
-    const response = await request.post("/users/login").send({
+  it("should return success for DELETE user", async () => {
+    const response = await request.delete("/users").send({
       username: userInstance.username,
-      password: userInstance.password,
     });
 
     expect(response.status).toBe(200);
