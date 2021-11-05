@@ -60,7 +60,7 @@ const orderRoutes = (app: express.Application) => {
   app.get("/orders/:userId", show);
   app.post("/orders", verifyAuthToken, create);
   app.post("/orders/products", verifyAuthToken, addProduct);
-  app.delete("/orders", destroy);
+  app.delete("/orders", verifyAuthToken, destroy);
 };
 
 export default orderRoutes;

@@ -71,6 +71,16 @@ describe("Order Handler", () => {
     expect(response.body).toBeTruthy();
   });
 
+  it("should return success for DELETE order by order id", async () => {
+    const response = await request
+      .delete("/orders")
+      .auth(token, { type: "bearer" })
+      .send({ orderId: "1" });
+
+    expect(response.status).toBe(200);
+    expect(response.body).toBeTruthy();
+  });
+
   // it("should return success for CREATE order with product quantity and product id", async () => {
   //   const response = await request
   //     .post("/orders/products")
@@ -83,7 +93,6 @@ describe("Order Handler", () => {
 
   afterAll(async () => {
     await productStore.delete(productInstance.name);
-    await orderStore.delete("1");
     await userStore.delete(userInstance.username);
   });
 });
