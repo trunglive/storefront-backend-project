@@ -5,7 +5,6 @@ import { User, UserStore } from "../user";
 import { parseJwt } from "../../utils/parseJwt";
 
 dotenv.config();
-
 const { BCRYPT_SALT_ROUNDS, BCRYPT_PEPPER, BCRYPT_TOKEN_SECRET } = process.env;
 
 const store = new UserStore();

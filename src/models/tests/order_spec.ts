@@ -5,7 +5,6 @@ import { User, UserStore } from "../user";
 import { ProductStore } from "../product";
 
 dotenv.config();
-
 const { BCRYPT_SALT_ROUNDS, BCRYPT_PEPPER } = process.env;
 
 const store = new OrderStore();
