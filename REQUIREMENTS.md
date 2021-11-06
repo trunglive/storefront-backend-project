@@ -3,6 +3,26 @@
 > Users should be able to navigate an index of all products, view specific product details, and add products to an order that can be viewed in a cart page.
 
 ### API Endpoints
+`GET /` - homepage
+
+`GET /products` - READ all products\
+`GET /products/:productName` - READ specific product by product name\
+`POST /products` - CREATE product\
+`DELETE /products` - DELETE product by product id
+
+`GET /users` - READ all users\
+`GET /users/:username` - READ specific user by username\
+`POST /users/register` - CREATE user\
+`POST /users/login` - LOGIN user\
+`DELETE /users` - DELETE specific user by username
+
+`GET /orders` - READ all orders\
+`GET /orders/:userId` - READ orders by user id\
+`POST /orders` - CREATE order\
+`DELETE /orders` - DELETE specific order by order id\
+`POST /orders/products` - CREATE order with product quantity and product id\
+`DELETE /orders/products` - DELETE order product by order product id
+
 #### Products
 - Index
 - Show (args: product name)
