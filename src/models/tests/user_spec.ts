@@ -5,7 +5,7 @@ import { User, UserStore } from "../user";
 import { parseJwt } from "../../utils/parseJwt";
 
 dotenv.config();
-const { BCRYPT_SALT_ROUNDS, BCRYPT_PEPPER, BCRYPT_TOKEN_SECRET } = process.env;
+const { BCRYPT_SALT_ROUNDS, BCRYPT_PEPPER, JWT_TOKEN_SECRET } = process.env;
 
 const store = new UserStore();
 
@@ -83,7 +83,7 @@ describe("User Model", () => {
 
     const token = jwt.sign(
       { username: foundUser.username },
-      BCRYPT_TOKEN_SECRET as string
+      JWT_TOKEN_SECRET as string
     );
     const { username } = parseJwt(token);
     expect(username).toBe(foundUser.username);

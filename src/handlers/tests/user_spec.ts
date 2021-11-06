@@ -3,8 +3,8 @@ import dotenv from "dotenv";
 import app from "../../server";
 
 dotenv.config();
-const { BCRYPT_TEST_TOKEN } = process.env;
-const token = BCRYPT_TEST_TOKEN as string;
+const { JWT_TEST_TOKEN } = process.env;
+const token = JWT_TEST_TOKEN as string;
 
 const request = supertest(app);
 
