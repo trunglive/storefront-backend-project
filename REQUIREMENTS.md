@@ -83,7 +83,7 @@ Indexes:
 ```shell
 Table "public.users"
 Column    |          Type           | Collation | Nullable |              Default              
------------+-------------------------+-----------+----------+-----------------------------------
+----------+-------------------------+-----------+----------+-----------------------------------
 id        | integer                 |           | not null | nextval('users_id_seq'::regclass)
 firstname | character varying(255)  |           |          |
 lastname  | character varying(255)  |           |          |
@@ -98,7 +98,7 @@ TABLE "orders" CONSTRAINT "orders_user_id_fkey" FOREIGN KEY (user_id) REFERENCES
 ```shell
 Table "public.orders"
 Column  |          Type          | Collation | Nullable |              Default               
----------+------------------------+-----------+----------+------------------------------------
+--------+------------------------+-----------+----------+--------------------------------------
 id      | integer                |           | not null | nextval('orders_id_seq'::regclass)
 status  | character varying(100) |           |          |
 user_id | bigint                 |           |          |
@@ -111,7 +111,7 @@ Foreign-key constraints:
 ```shell
 Table "public.order_products"
 Column     |  Type   | Collation | Nullable |                  Default                   
-------------+---------+-----------+----------+--------------------------------------------
+-----------+---------+-----------+----------+--------------------------------------------------
 id         | integer |           | not null | nextval('order_products_id_seq'::regclass)
 quantity   | integer |           |          |
 order_id   | bigint  |           |          |
