@@ -6,7 +6,7 @@ import { User, UserStore } from "../models/user";
 import verifyAuthToken from "../middleware/verifyAuthToken";
 
 dotenv.config();
-const { BCRYPT_SALT_ROUNDS, BCRYPT_PEPPER, BCRYPT_TOKEN_SECRET } = process.env;
+const { BCRYPT_SALT_ROUNDS, BCRYPT_PEPPER, JWT_TOKEN_SECRET } = process.env;
 
 const store = new UserStore();
 
@@ -59,7 +59,7 @@ const login = async (req: Request, res: Response) => {
 
     const token = jwt.sign(
       { username: foundUser.username },
-      BCRYPT_TOKEN_SECRET as string
+      JWT_TOKEN_SECRET as string
     );
     res.header("auth-token", token).send({ token });
   } catch (err) {

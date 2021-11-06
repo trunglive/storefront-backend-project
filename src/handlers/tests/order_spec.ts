@@ -6,8 +6,8 @@ import { User, UserStore } from "../../models/user";
 import { ProductStore } from "../../models/product";
 
 dotenv.config();
-const { BCRYPT_SALT_ROUNDS, BCRYPT_PEPPER, BCRYPT_TEST_TOKEN } = process.env;
-const token = BCRYPT_TEST_TOKEN as string;
+const { BCRYPT_SALT_ROUNDS, BCRYPT_PEPPER, JWT_TEST_TOKEN } = process.env;
+const token = JWT_TEST_TOKEN as string;
 
 const request = supertest(app);
 
