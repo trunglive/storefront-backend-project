@@ -3,7 +3,6 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
 dotenv.config();
-
 const { BCRYPT_TOKEN_SECRET } = process.env;
 
 const verifyAuthToken = (req: Request, res: Response, next: Function) => {

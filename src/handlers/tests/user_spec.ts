@@ -1,10 +1,12 @@
 import supertest from "supertest";
+import dotenv from "dotenv";
 import app from "../../server";
 
-const request = supertest(app);
+dotenv.config();
+const { BCRYPT_TEST_TOKEN } = process.env;
+const token = BCRYPT_TEST_TOKEN as string;
 
-const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFudGRuMjM4LXVzZXItaGFuZGxlci10ZXN0IiwiaWF0IjoxNjM2MDgzNTYxfQ.TJlUQjkwOhLqHV7Olow-S5RP-d_ZO6-5o-U0cIBCbpU";
+const request = supertest(app);
 
 const userInstance = {
   firstname: "Anthony",

@@ -6,7 +6,6 @@ import { User, UserStore } from "../models/user";
 import verifyAuthToken from "../middleware/verifyAuthToken";
 
 dotenv.config();
-
 const { BCRYPT_SALT_ROUNDS, BCRYPT_PEPPER, BCRYPT_TOKEN_SECRET } = process.env;
 
 const store = new UserStore();

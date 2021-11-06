@@ -4,20 +4,15 @@ import dotenv from "dotenv";
 import app from "../../server";
 import { User, UserStore } from "../../models/user";
 import { ProductStore } from "../../models/product";
-import { OrderStore } from "../../models/order";
 
 dotenv.config();
-
-const { BCRYPT_SALT_ROUNDS, BCRYPT_PEPPER } = process.env;
-
-const userStore = new UserStore();
-const productStore = new ProductStore();
-const orderStore = new OrderStore();
+const { BCRYPT_SALT_ROUNDS, BCRYPT_PEPPER, BCRYPT_TEST_TOKEN } = process.env;
+const token = BCRYPT_TEST_TOKEN as string;
 
 const request = supertest(app);
 
-const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFudGRuMjM4LXVzZXItaGFuZGxlci10ZXN0IiwiaWF0IjoxNjM2MDgzNTYxfQ.TJlUQjkwOhLqHV7Olow-S5RP-d_ZO6-5o-U0cIBCbpU";
+const userStore = new UserStore();
+const productStore = new ProductStore();
 
 const userInstance = {
   firstname: "Stephen",
